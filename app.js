@@ -11,6 +11,17 @@ var users        = require('./routes/users');
 
 var app = express();
 
+//SERVER SET UP AND LISTEN
+var port    = process.env.PORT || 8080;
+var router  = express.Router();
+var server  = require('http').createServer(app);
+
+//SERVER LISTEN
+app.use('/', router);
+server.listen(port, function(){
+  console.log('Server Started. Listening to localhost:8080');
+});
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
