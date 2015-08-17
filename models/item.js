@@ -2,11 +2,11 @@ var mongoose = require('mongoose');
 
 //create a schema
 var itemSchema = new mongoose.Schema({
-  Title: {type: String, required: true}
-  ,Description: String
+  title: {type: String, required: true}
+  ,description: String
   ,catagory: String
-  ,created_at: Date
-  ,updated_at: Date
+  ,created_at: {type: Date,  default:Date.now}
+  ,updated_at: {type: Date,  default:Date.now}
   ,user_id: [{type: mongoose.Schema.Types.ObjectId, ref: 'User'}] //adding in the 'ref:' code turns this embedded into a forgein key.
     };
 });
