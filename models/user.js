@@ -1,4 +1,4 @@
-var mongoose = require('mongoose'); //import package mongoose
+var mongoose = require('mongoose'); //import package mongoose 
 var bcrypt = require('bcrypt'); // import package bcrypt
 
 var userSchema = new mongoose.Schema({ //create a new user schema
