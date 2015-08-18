@@ -15,8 +15,9 @@ var itemsRoutes  = require('./routes/items');
 //WEB TOKENS
 var jwt          = require("jsonwebtoken");
 
-//MONGOOSE CONNECT AND ESTABLISH DATABASE
-mongoose.connect('mongodb://localhost:27017/bucketlist-db');
+//MONGOOSE CONNECT AND ESTABLISH DATABASE WITH MONGOLAB
+mongoose.connect('mongodb://admin:bucketlist@ds059712.mongolab.com:59712/bucketlist-db');
+// mongoose.connect('mongodb://localhost:27017/bucketlist-db');
 
 var app = express();
 
