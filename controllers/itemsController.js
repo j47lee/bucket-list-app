@@ -2,22 +2,21 @@ var Item = require('../models/Item');
 
 // GET
 function getIndex(req, res) {
-  Item.find({}, {}, function(error, dbResponce) {
+  Item.find({}, {}, function(error, dbResponse) {
     if (error) {
-      res.send('Something went wrong');
+      res.send('Something went wrong w getting Items');
     }
     console.log('GET REQUEST FOR ALL');
     // by DEFAULT res.render looks inside folder names views
-    res.render('./items/index', {
+    res.render('./items', {
       title: "Item Index",
-      items: dbResponce
+      items: dbResponse
     });
-    // res.render('layout', {: candies});
   });
 }
 
 // GET
-function newBoard(req, res) {
+function newItem(req, res) {
   console.log("FORM RENDERED FOR NEW DOCUMENT");
   res.render('./items/new', {
     title: "Create New Board"
@@ -25,60 +24,62 @@ function newBoard(req, res) {
 }
 
 // POST
-function create(req, res) {
+function createItem(req, res) {
   console.log('POST REQ RECVD');
   console.log('body:', req.body);
   var item = new Item();
 
-  item.name = req.body.name;
-  item.color = req.body.color;
+  item.title = req.body.title; //pull from the body the title
+  item.description = req.body.description; //pull from body the description
+  item.catagory = req.body.catagory; //pull for the body the catagory
 
   item.save(function(error) {
     if (error) {
-      res.send('Could not ceate item b/c:' + error);
+      res.send('Could not ceate item due to:' + error);
     }
     res.redirect('/items');
   });
 }
 
 // GET
-function getOne(req, res) {
+function getOneItem(req, res) {
   var id = req.params.id;
 
-  Item.findById(id, function(error, dbResponce) {
+  Item.findById(id, function(error, dbResponse) {
     if (error) {
       res.send('Could not find item b/c: ' + error);
     }
     console.log("GET REQUEST FOR ONE DOCUMENT");
-    console.log(dbResponce);
-    res.render('./items/show', {
+    console.log(dbResponse);
+    res.render('./items/:id', {//**** need to review this route for errors.
       title: "Show Item",
-      item: dbResponce
+      item: dbResponse
     });
   });
 }
 
-function edit(req, res) {
+function editItem(req, res) {
   var id = req.params.id;
-  Item.findById(id, function(err, dbResponce) {
-    res.render('./items/edit', {
-      item: dbResponce
+  Item.findById(id, function(err, dbResponse) {
+    res.render('./items/:id/edit', { //**** need to review this route for errors.
+      item: dbResponse
     });
   });
 }
 
-function update(req, res) {
+function updateItem(req, res) {
   var id = req.params.id;
 
-  Item.findById(id, function(error, dbResponce) {
+  Item.findById(id, function(error, dbResponse) {
     if (error) {
       res.send('Could not find item b/c:' + error);
     }
     console.log('PUT REQUEST RECEIVED');
-    console.log(dbResponce);
-    dbResponce.name = req.body.name;
-    dbResponce.color = req.body.color;
-    dbResponce.save(function(error) {
+    console.log(dbResponse);
+    dbResponse.title = req.body.title; //pull from the body the title
+    dbResponse.description = req.body.description; //pull from body the description
+    dbResponse.catagory = req.body.catagory; //pull for the body the catagory
+    dbResponse.save(function(error) {
       if (error) {
         res.send('Could not update item b/c:' + error);
       }
@@ -87,7 +88,7 @@ function update(req, res) {
   });
 }
 
-function destroy(req, res) {
+function destroyItem(req, res) {
   var id = req.params.id;
   console.log('DELETE REQUEST RECEIVED');
   Item.remove({
@@ -102,10 +103,10 @@ function destroy(req, res) {
 
 module.exports = {
   getIndex: getIndex,
-  new: newBoard,
-  create: create,
-  getOne: getOne,
-  edit: edit,
-  update: update,
-  destroy: destroy
+  new: newItem,
+  create: createItem,
+  getOne: getOneItem,
+  edit: editItem,
+  update: updateItem,
+  destroy: destroyItem
 };
