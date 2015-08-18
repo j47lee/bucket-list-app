@@ -7,8 +7,10 @@ var bodyParser   = require('body-parser');
 var mongoose     = require('mongoose');
 var bcrypt       = require('bcrypt');
 
+//REQUIRE ROUTES
 var routes       = require('./routes/index');
-var users        = require('./routes/users');
+var usersRoutes  = require('./routes/users');
+var itemsRoutes  = require('./routes/items');
 
 //WEB TOKENS
 var jwt          = require("jsonwebtoken");
@@ -43,6 +45,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 //USE ROUTES
 app.use(routes);
+app.use(usersRoutes);
+app.use(itemsRoutes);
 // app.use('/', routes);  //to be removed
 // app.use('/users', users);  //to be removed
 
