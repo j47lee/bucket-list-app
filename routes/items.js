@@ -1,9 +1,9 @@
 var express         = require('express');
-var bodyParser      = require('body-parser'), //parses information from POST
-var methodOverride  = require('method-override'); //used to manipulate POST
+var bodyParser      = require('body-parser'); //parses information from POST
+var router          = express.Router();
+// var methodOverride  = require('method-override'); //used to manipulate POST
 var itemsController = require('../controllers/itemsController');
 
-var itemsRouter     = express.Router();
 
 //GET ALL
 router.get('/items', itemsController.getIndex);
@@ -26,4 +26,4 @@ router.put('/items/:id/', itemsController.update);
 //DELETE ONE
 router.delete('/items/:id', itemsController.destroy);
 
-module.exports = itemsRouter;
+module.exports = router;

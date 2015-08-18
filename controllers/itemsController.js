@@ -1,4 +1,4 @@
-var Item = require('../models/Item');
+var Item = require('../models/item');
 
 // GET
 function getIndex(req, res) {
@@ -8,10 +8,15 @@ function getIndex(req, res) {
     }
     console.log('GET REQUEST FOR ALL');
     // by DEFAULT res.render looks inside folder names views
-    res.render('./items', {
-      title: "Item Index",
-      items: dbResponse
-    });
+
+    //UNCOMMENT WHEN VIEWS ARE READY
+    // res.render('./items', {
+    //   title: "Item Index",
+    //   items: dbResponse
+    // });
+
+    res.json(dbResponse)//json test, replace with views when ready
+    
   });
 }
 

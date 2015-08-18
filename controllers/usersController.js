@@ -7,10 +7,15 @@ function getIndex(req, res) {
       res.send('Failed to request user');
     }
     console.log('GET REQUEST FOR ALL');
-    res.render('./users/index', {
-      title: "User Index",
-      users: dbResponse
-    });
+
+    //UNCOMMENT WHEN VIEWS ARE READY
+    // res.render('./users/index', {
+    //   title: "User Index",
+    //   users: dbResponse
+    // });
+
+    res.json(dbResponse) //json test, replace with views when ready
+    
   });
 }
 
