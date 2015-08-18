@@ -10,6 +10,12 @@ var bcrypt       = require('bcrypt');
 var routes       = require('./routes/index');
 var users        = require('./routes/users');
 
+//WEB TOKENS
+var jwt          = require("jsonwebtoken");
+
+//MONGOOSE CONNECT AND ESTABLISH DATABASE
+mongoose.connect('mongodb://localhost:27017/bucketlist-db');
+
 var app = express();
 
 //SERVER SET UP AND LISTEN
