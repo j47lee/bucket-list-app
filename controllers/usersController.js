@@ -17,7 +17,6 @@ function getIndex(req, res) {
     // });
 
     res.json(dbResponse) //json test, replace with views when ready
-
   });
 }
 
