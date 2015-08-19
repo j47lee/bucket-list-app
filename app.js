@@ -6,7 +6,7 @@ var cookieParser = require('cookie-parser');
 var bodyParser   = require('body-parser');
 var mongoose     = require('mongoose');
 var bcrypt       = require('bcrypt');
-// var cors = require('cors');
+var cors = require('cors');
 
 //REQUIRE ROUTES
 var routes       = require('./routes/index');
@@ -18,7 +18,7 @@ var jwt          = require("jsonwebtoken");
 
 //MONGOOSE CONNECT AND ESTABLISH DATABASE WITH MONGOLAB
 mongoose.connect('mongodb://admin:bucketlist@ds059712.mongolab.com:59712/bucketlist-db');
-// mongoose.connect('mongodb://localhost:27017/bucketlist-db');
+//mongoose.connect('mongodb://localhost:27017/bucketlist-db');
 
 var app = express();
 
@@ -84,6 +84,8 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
+app.use('/Front-end', express.static(__dirname + '/Front-end'));
 // app.use(cors);
 
 //USE ROUTES
@@ -123,7 +125,10 @@ app.use(function(err, req, res, next) {
     error: {}
   });
 });
-app.all('/', function(req, res, next) {
+
+
+//Allows for cross domain acccess
+app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Headers", "X-Requested-With");
   next();
