@@ -15,7 +15,7 @@ function getIndex(req, res) {
     // });
 
     res.json(dbResponse) //json test, replace with views when ready
-    
+
   });
 }
 
@@ -54,10 +54,11 @@ function getOne(req, res) {
     }
     console.log("GET REQUEST FOR ONE DOCUMENT");
     console.log(dbResponse);
-    res.render('./users/show', {
-      title: "Show User",
-      user: dbResponse
-    });
+    // res.render('./users/show', {
+    //   title: "Show User",
+    //   user: dbResponse
+    // });
+    res.json(dbResponse)
   });
 }
 

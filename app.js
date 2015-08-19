@@ -33,6 +33,46 @@ server.listen(port, function(){
   console.log('Server Started. Listening to localhost:8080');
 });
 
+//SOCKET IO SETUP
+var io = require('socket.io')(server);
+
+// TWITTER WEBSOCKET BEGINS //////////////////////////////////////////////////////////////////////////////
+var Twit = require('twit');
+var twitter = new Twit({
+  consumer_key: process.env.TWITTER_CONSUMER_KEY,
+  consumer_secret: process.env.TWITTER_CONSUMER_SECRET,
+  access_token: process.env.TWITTER_ACCESS_TOKEN,
+  access_token_secret: process.env.TWITTER_ACCESS_TOKEN_SECRET
+})
+console.log(twitter);
+
+//set stream to the "twitter" instance of Twit from above
+//here we hard set the track keyword to search in twitter. can be any word we want to search
+var stream = twitter.stream('statuses/filter', {track: 'basketball'});
+
+//server-side: io.on turns on websocket whenever we see the keyword "connect"
+io.on('connect', function(socket){
+  //server-side: stream is event listener. turn stream on and run the function inside
+  stream.on('tweet', function (tweet) {
+    //filter data that we want
+    var data = {};
+      data.name = tweet.user.name;
+      data.screen_name = tweet.user.screen_name;
+      data.text = tweet.text;
+      data.user_profile_image = tweet.user.profile_image_url;
+      data.created_at = tweet.created_at;
+    //client-side: this sends info to the client: runs socket emit
+    socket.emit('tweets', data);
+  });
+});
+// TWITTER WEBSOCKET ENDS ////////////////////////////////////////////////////////////////////////////////////////////
+
+//temporary routing for index page to display twitter ////////////////////////////////////////////////////////////////
+router.get('/', function(req, res) {
+  res.render('index', { header: 'Twitter streams'});
+});
+
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
@@ -88,5 +128,7 @@ app.all('/', function(req, res, next) {
   res.header("Access-Control-Allow-Headers", "X-Requested-With");
   next();
  });
+
+
 
 module.exports = app;
