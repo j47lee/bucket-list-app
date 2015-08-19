@@ -33,6 +33,7 @@ loginForm.on('submit',function(event) {
     success : function (returnedData) {
       console.log("success");
       console.dir(returnedData);
+      window.location = "users";
     },
     error: function (error, data) {
       console.log('error handler');
