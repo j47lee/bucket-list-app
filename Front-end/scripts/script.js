@@ -1,6 +1,6 @@
 $(document).ready(function(){//Load JQuery on Ready
 
-var loginForm       = $('#login-form');
+var loginForm   = $('#login-form');
 var loginButton = $('#login-btn');
 
 loginForm.on('submit',function(event) {

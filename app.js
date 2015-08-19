@@ -15,6 +15,7 @@ var itemsRoutes  = require('./routes/items');
 
 //WEB TOKENS
 var jwt          = require("jsonwebtoken");
+var superPhrase  = process.env.NAMEOFTHECONSTANT;
 
 //MONGOOSE CONNECT AND ESTABLISH DATABASE WITH MONGOLAB
 mongoose.connect('mongodb://admin:bucketlist@ds059712.mongolab.com:59712/bucketlist-db');
@@ -39,11 +40,11 @@ var io = require('socket.io')(server);
 // TWITTER WEBSOCKET BEGINS //////////////////////////////////////////////////////////////////////////////
 var Twit = require('twit');
 var twitter = new Twit({
-  consumer_key: process.env.TWITTER_CONSUMER_KEY,
-  consumer_secret: process.env.TWITTER_CONSUMER_SECRET,
-  access_token: process.env.TWITTER_ACCESS_TOKEN,
-  access_token_secret: process.env.TWITTER_ACCESS_TOKEN_SECRET
-})
+  consumer_key:         process.env.TWITTER_CONSUMER_KEY,
+  consumer_secret:      process.env.TWITTER_CONSUMER_SECRET,
+  access_token:         process.env.TWITTER_ACCESS_TOKEN,
+  access_token_secret:  process.env.TWITTER_ACCESS_TOKEN_SECRET
+});
 console.log(twitter);
 
 //set stream to the "twitter" instance of Twit from above
@@ -55,12 +56,12 @@ io.on('connect', function(socket){
   //server-side: stream is event listener. turn stream on and run the function inside
   stream.on('tweet', function (tweet) {
     //filter data that we want
-    var data = {};
-      data.name = tweet.user.name;
-      data.screen_name = tweet.user.screen_name;
-      data.text = tweet.text;
-      data.user_profile_image = tweet.user.profile_image_url;
-      data.created_at = tweet.created_at;
+    var data                    = {};
+      data.name                 = tweet.user.name;
+      data.screen_name          = tweet.user.screen_name;
+      data.text                 = tweet.text;
+      data.user_profile_image   = tweet.user.profile_image_url;
+      data.created_at           = tweet.created_at;
     //client-side: this sends info to the client: runs socket emit
     socket.emit('tweets', data);
   });
@@ -97,8 +98,8 @@ app.use(itemsRoutes);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
-  var err = new Error('Not Found');
-  err.status = 404;
+  var err       = new Error('Not Found');
+  err.status    = 404;
   next(err);
 });
 

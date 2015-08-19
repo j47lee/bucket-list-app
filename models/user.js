@@ -1,11 +1,12 @@
-var mongoose = require('mongoose'); //import package mongoose 
-var bcrypt = require('bcrypt'); // import package bcrypt
+var mongoose    = require('mongoose'); //import package mongoose
+var bcrypt      = require('bcrypt'); // import package bcrypt
+var secret      = require('superPhrase');
 
-var userSchema = new mongoose.Schema({ //create a new user schema
-    name: String
-    , email: {type: String, required: true, unique: true } //require email, must be origin & unused email address
-    , password: {type: String, require: true, select: false}  //require password - make sure it won't be returned in normal user search
-    , created_at: {type: Date,  default:Date.now}
+var userSchema  = new mongoose.Schema({ //create a new user schema
+    name:           String
+    , email:        {type: String, required: true, unique: true} //require email, must be origin & unused email address
+    , password:     {type: String, require: true, select: false}  //require password - make sure it won't be returned in normal user search
+    , created_at:   {type: Date,  default:Date.now}
     // , addresses: [{street: String, city: String,}] //adding the array or objects makes this an embedded relationship
 });
 
