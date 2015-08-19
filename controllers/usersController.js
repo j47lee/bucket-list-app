@@ -1,4 +1,6 @@
 var User = require('../models/User');
+var app = require('../app.js');
+
 
 // GET
 function getIndex(req, res) {
