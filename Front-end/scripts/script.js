@@ -1,9 +1,10 @@
 $(document).ready(function(){//Load JQuery on Ready
-  
+
 // USER LOG IN REQUEST
 // ==========================================================
 var loginForm   = $('#login-form');
 var loginButton = $('#login-btn');
+var User = require('../models/user'); // pull in the user schema for authentication
 
 loginForm.on('submit',function(evt) {
   evt.preventDefault();
