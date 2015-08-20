@@ -1,6 +1,6 @@
 var express     = require('express');
 var router      = express.Router();
-var superPhrase = process.env.NAMEOFTHECONSTANT;
+// var superPhrase = process.env.NAMEOFTHECONSTANT;
 
 var usersController = require('../controllers/usersController');
 
