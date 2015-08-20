@@ -1,6 +1,6 @@
 var mongoose    = require('mongoose'); //import package mongoose
 var bcrypt      = require('bcrypt'); // import package bcrypt
-var secret      = require('superPhrase');
+// var secret      = require('superPhrase');
 
 var userSchema  = new mongoose.Schema({ //create a new user schema
     name:           String
