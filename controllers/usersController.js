@@ -16,14 +16,14 @@ function getIndex(req, res) {
     //   users: dbResponse
     // });
 
-    res.render('user') //json test, replace with views when ready
+    res.render('users/index'); //json test, replace with views when ready
   });
 }
 
 // GET
 function newUser(req, res) {
   console.log("FORM RENDERED FOR NEW DOCUMENT");
-  res.render('./users/new', {
+  res.render('users/new', {
     title: "Create New User"
   });
 }
@@ -55,18 +55,18 @@ function getOne(req, res) {
     }
     console.log("GET REQUEST FOR ONE DOCUMENT");
     console.log(dbResponse);
-    // res.render('./users/show', {
-    //   title: "Show User",
-    //   user: dbResponse
-    // });
-    res.json(dbResponse)
+    res.render('/users/show', {
+      title: "Show User",
+      user: dbResponse
+    });
+    res.json(dbResponse);
   });
 }
 
 function edit(req, res) {
   var id = req.params.id;
   User.findById(id, function(err, dbResponse) {
-    res.render('./users/edit', {
+    res.render('/users/edit', {
       user: dbResponse
     });
   });
