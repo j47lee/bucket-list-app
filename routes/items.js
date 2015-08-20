@@ -15,7 +15,7 @@ router.get('/items/new', itemsController.new);
 router.post('/items', itemsController.create);
 
 //GET ONE
-router.get('/items/:id', itemsController.getOne);
+router.get('/items/show/:id', itemsController.getOne);
 
 //GET EDIT FORM
 router.get('/items/:id/edit', itemsController.edit);

@@ -3,10 +3,14 @@ var loginForm    = $('#login-form');
 var loginButton  = $('#login-btn');
 var signUpForm   = $('#sign-up-form');
 var signUpButton = $('#sign-up-btn');
+// USER LOG IN REQUEST
+// ==========================================================
 
 
 // USER LOG IN REQUEST
 // ==========================================================
+var User = require('../models/user'); // pull in the user schema for authentication
+
 
 loginForm.on('submit',function(evt) {
   evt.preventDefault();

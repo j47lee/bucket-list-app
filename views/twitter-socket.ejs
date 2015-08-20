@@ -1,0 +1,43 @@
+    <!-- TWITTER -->
+    <!doctype html>
+    <html>
+    <head>
+        <title>Twitter Socket IO Testing</title>
+         <script type="text/javascript" src="/socket.io/socket.io.js"></script>
+         <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.js"></script>
+    </head>
+    <body>
+        <h1><%= header %></h1>
+        <!-- SOCKET IO - INPUT TO QUERY TWITTER -->
+        <input id='tweet-search' type="text"><button id='search-tweets'>SEARCH TWITTER</button>
+        <div id="tweet-container"></div>
+
+        <script type="text/javascript">
+
+          // //SOCKET IO TWITTER FEED /////////////////////////////////////////////
+          var socket = io();
+
+            socket.on('connect', function() {
+              console.log('Connected!');
+
+              //GRAB INPUT TEXT AND EMIT TO SERVER
+              var tweetSearch = $('#tweet-search');
+              var searchTweets = $('#search-tweets');
+
+              searchTweets.on('click', function(){
+                var data = tweetSearch.val();
+                socket.emit('tweetMessage', data);
+              })
+
+            });
+
+            socket.on('tweets', function(tweet) {
+              var html = '<div class="row"><div class="col-md-6 col-md-offset-3 tweet"><img src="' + tweet.user_profile_image + '" class="avatar pull-left"/><div class="names"><span class="full-name">' + tweet.name + ' </span><span class="username">@' +tweet.screen_name + '</span></div><div class="contents"><span class="text">' + tweet.text + '</span></div><div class="location">' + tweet.created_at + '</div></div></div>';
+              $('#tweet-container').prepend(html);
+            });
+          // //SOCKET IO END ////////////////////////////////////////////////////////////
+
+        </script>
+    </body>
+    </html>
+    <!-- TWITTER END -->
