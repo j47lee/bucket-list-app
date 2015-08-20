@@ -10,13 +10,15 @@ function getIndex(req, res) {
     }
     console.log('GET REQUEST FOR ALL');
 
-    //UNCOMMENT WHEN VIEWS ARE READY
+    // UNCOMMENT WHEN VIEWS ARE READY
     // res.render('./users/index', {
     //   title: "User Index",
     //   users: dbResponse
     // });
 
-    res.render('users/index'); //json test, replace with views when ready
+    // res.render('users/index'); //json test, replace with views when ready
+
+    res.json(dbResponse)
   });
 }
 
@@ -59,13 +61,17 @@ function getOne(req, res) {
       title: "Show User",
       user: dbResponse
     });
-    res.json(dbResponse);
+    // res.json(dbResponse);
   });
 }
 
 function edit(req, res) {
   var id = req.params.id;
-  User.findById(id, function(err, dbResponse) {
+  User.findById({_id: id}, function(err, dbResponse) {
+    if (error) {
+      res.send('Coud not find edit page')
+    }
+    console.log('edit request received');
     res.render('/users/edit', {
       user: dbResponse
     });
