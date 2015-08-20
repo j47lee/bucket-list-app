@@ -55,7 +55,7 @@ function getOne(req, res) {
     }
     console.log("GET REQUEST FOR ONE DOCUMENT");
     console.log(dbResponse);
-    res.render('/users/show', {
+    res.render('users/show', {
       title: "Show User",
       user: dbResponse
     });
