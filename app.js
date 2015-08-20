@@ -122,7 +122,7 @@ var yelp = require("yelp").createClient({
   oauthToken: process.env.YELP_ACCESS_TOKEN,
   oauthTokenSecret: process.env.YELP_ACCESS_TOKEN_SECRET
 });
-console.log(yelp);
+// console.log(yelp);
 
 // // See http://www.yelp.com/developers/documentation/v2/search_api
 // yelp.search({term: "food", location: "Montreal"}, function(error, data) {
@@ -145,7 +145,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/Front-end', express.static(__dirname + '/Front-end'));
+// app.use('/Front-end', express.static(__dirname + '/Front-end'));
 // app.use(cors);
 
 //USE ROUTES
