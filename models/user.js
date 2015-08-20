@@ -33,7 +33,7 @@ userSchema.pre('save', function(next){//run this function before 'this' gets sav
 // add an authenticate method to the user schema
 userSchema.methods.authenticate = function(password){
     var user = this;
-    // console.log(this);
+    console.log(this);
     return bcrypt.compareSync(password, user.password);
 };
 
