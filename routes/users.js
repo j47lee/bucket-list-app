@@ -8,21 +8,21 @@ var usersController = require('../controllers/usersController');
 router.get('/users/new', usersController.new);
 
 //middel where to verify token.
-apiRouter.use(function(req, res, next){
-// checks for token
-    var token = req.body.token || req.param ('token') || req.headers['x-access-token']
-    //decode the token
-    if(token){
-        // varify superPhrase and check expiration
-        jwt.verify(token, superPhrase, function(err, decoded){
-            if(err) return res.status(403).send({ success: false, message: "Access Denied Dude!"})
-            req.decoded = decoded;
-            next();
-        })
-    }else{
-        return res.status(403).send({success: false, message: "No token provided"});
-    }
-});
+// apiRouter.use(function(req, res, next){
+// // checks for token
+//     var token = req.body.token || req.param ('token') || req.headers['x-access-token']
+//     //decode the token
+//     if(token){
+//         // varify superPhrase and check expiration
+//         jwt.verify(token, superPhrase, function(err, decoded){
+//             if(err) return res.status(403).send({ success: false, message: "Access Denied Dude!"})
+//             req.decoded = decoded;
+//             next();
+//         })
+//     }else{
+//         return res.status(403).send({success: false, message: "No token provided"});
+//     }
+// });
 //GET ALL
 router.get('/users', usersController.getIndex);
 //CREATE AFTER FORM SUBMISSION

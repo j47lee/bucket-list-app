@@ -33,7 +33,7 @@ router.get('/', function(req, res, next) {
 //       }
 //     }
 //   })
-});
+// });
 
 
 router.get('/sign-up',function(req,res,next) {
