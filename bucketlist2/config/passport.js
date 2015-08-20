@@ -40,23 +40,24 @@ module.exports = function(passport) {
         passReqToCallback : true // allows us to pass back the entire request to the callback
     },
     function(req, email, password, done) {
-
+console.log("step1 local-signup");
         // asynchronous
         // User.findOne wont fire unless data is sent back
         process.nextTick(function() {
-
+console.log("step2 local-signup");
         // find a user whose email is the same as the forms email
         // we are checking to see if the user trying to login already exists
         User.findOne({ 'local.email' :  email }, function(err, user) {
+console.log("step3 local-signup");
             // if there are any errors, return the error
             if (err)
-                return done(err);
+                return console.log("step4-ERR local-signup" + err), done(err);
 
             // check to see if theres already a user with that email
             if (user) {
-                return done(null, false, req.flash('signupMessage', 'That email is already taken.'));
+                return console.log("step4-ERR local-signup" + err), done(null, false, req.flash('signupMessage', 'That email is already taken.'));
             } else {
-
+console.log("step4-ELSE local-signup");
                 // if there is no user with that email
                 // create the user
                 var newUser            = new User();
@@ -64,12 +65,12 @@ module.exports = function(passport) {
                 // set the user's local credentials
                 newUser.local.email    = email;
                 newUser.local.password = newUser.generateHash(password);
-
+                console.log("step4-ELSE-email&hash " + newUser.local.email + ' ' + newUser.local.password);
                 // save the user
                 newUser.save(function(err) {
-                    if (err)
+                    if (err) console.log("step4-ELSE & ERR " + err);
                         throw err;
-                    return done(null, newUser);
+                    return console.log("step4-ELSE & DONE" + newUser); done(null, newUser);
                 });
             }
 
