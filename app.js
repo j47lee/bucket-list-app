@@ -33,17 +33,17 @@ server.listen(port, function(){
   console.log('Server Started. Listening to localhost:8080');
 });
 
+// TWITTER WEBSOCKET BEGINS //////////////////////////////////////////////////////////////////////////////
 //SOCKET IO SETUP
 var io = require('socket.io')(server);
 
-// TWITTER WEBSOCKET BEGINS //////////////////////////////////////////////////////////////////////////////
 var Twit = require('twit');
 var twitter = new Twit({
   consumer_key: process.env.TWITTER_CONSUMER_KEY,
   consumer_secret: process.env.TWITTER_CONSUMER_SECRET,
   access_token: process.env.TWITTER_ACCESS_TOKEN,
   access_token_secret: process.env.TWITTER_ACCESS_TOKEN_SECRET
-})
+});
 console.log(twitter);
 
 //set stream to the "twitter" instance of Twit from above
@@ -65,12 +65,71 @@ io.on('connect', function(socket){
     socket.emit('tweets', data);
   });
 });
-// TWITTER WEBSOCKET ENDS ////////////////////////////////////////////////////////////////////////////////////////////
-
-//temporary routing for index page to display twitter ////////////////////////////////////////////////////////////////
-router.get('/', function(req, res) {
-  res.render('index', { header: 'Twitter streams'});
+// temporary routing for index page to display twitter socket io
+//SOCKET
+router.get('/twitter-socket', function(req, res) {
+  res.render('twitter-socket', { header: 'Twitter Socket IO'});
 });
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+// TWITTER API //////////////////////////////////////////////////////////////////////////////////////////////////////////
+var TwitterAPI = require('twitter');
+
+var client = new TwitterAPI({
+  consumer_key: process.env.TWITTER_CONSUMER_KEY,
+  consumer_secret: process.env.TWITTER_CONSUMER_SECRET,
+  access_token_key: process.env.TWITTER_ACCESS_TOKEN,
+  access_token_secret: process.env.TWITTER_ACCESS_TOKEN_SECRET
+});
+
+// temporary routing to display twitter API
+router.get('/twitter-api/:search', function(req, res) {
+  client.get('search/tweets', {q: req.params.search}, function(err, tweets){
+    if (err) {
+      console.log(err);
+      return;
+    }
+    else {
+      var userObj = { users: [] };
+      for (var i = 0; i < tweets.statuses.length; i++) {
+        var userURL = 'https://twitter.com/' + tweets.statuses[i].user.screen_name;
+        var userScreenName = tweets.statuses[i].user.screen_name;
+        var userImg = tweets.statuses[i].user.profile_image_url;
+        var userImgBig = userImg.replace("normal", "400x400");
+        var userText = tweets.statuses[i].text;
+        var userTextSplit = userText.split(' ')
+        var user = {
+          url: userURL,
+          name: userScreenName,
+          imgSmall: userImg,
+          imgBig: userImgBig,
+          text: userText,
+          words: userTextSplit
+        };
+        userObj.users.push(user);
+      }
+      res.json(userObj);
+    }
+  });
+});
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// YELP API  /////////////////////////////////////////////////////////////////////////////////////////////////////
+var yelp = require("yelp").createClient({
+  consumer_key: process.env.YELP_CONSUMER_KEY,
+  consumer_secret: process.env.YELP_CONSUMER_SECRET,
+  oauthToken: process.env.YELP_ACCESS_TOKEN,
+  oauthTokenSecret: process.env.YELP_ACCESS_TOKEN_SECRET
+});
+console.log(yelp);
+
+// // See http://www.yelp.com/developers/documentation/v2/search_api
+// yelp.search({term: "food", location: "Montreal"}, function(error, data) {
+//   console.log(error);
+//   console.log(data);
+// });
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
 // view engine setup
@@ -133,7 +192,5 @@ app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Headers", "X-Requested-With");
   next();
  });
-
-
 
 module.exports = app;
