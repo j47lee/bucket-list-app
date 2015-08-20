@@ -1,44 +1,31 @@
 $(document).ready(function(){//Load JQuery on Ready
-
-var loginForm       = $('#login-form');
+  
+// USER LOG IN REQUEST
+// ==========================================================
+var loginForm   = $('#login-form');
 var loginButton = $('#login-btn');
 
-loginForm.on('submit',function(event) {
-  event.preventDefault();
-  // console.log(event.target.name.value);
+loginForm.on('submit',function(evt) {
+  evt.preventDefault();
+  console.log(evt.target.password.value + evt.target.email.value);
 
-
-  //GET
   $.ajax({
-    method: 'get',
-    url: "http://localhost:8080/items",
-    crossDomain : true,
+    method: 'POST',
+    url: "http://localhost:8080/login",
+    data : JSON.stringify({user: { email: evt.target.email.value ,password: evt.target.password.value}}),
+    contentType: 'application/json; charset=UTF-8',
+    dataType: 'json',
     success : function (returnedData) {
       console.log("success");
-      console.log(returnedData);
+      console.dir(returnedData);
+      window.location = "users";
     },
     error: function (error, data) {
       console.log('error handler');
       console.log(error);
       console.log(data);
     }
-  });//END GET
-
-  // $.ajax({
-  //   method: 'Post',
-  //   data: JSON.stringify({name:"jesse"}),
-  //   url: "http:/localhost:8080/items",
-  //   success : function (returnedData) {
-  //     console.log("success");
-  //     console.dir(returnedData);
-  //   },
-  //   error: function (error, data, bullshit) {
-  //     console.log('error handler');
-  //     console.log(error);
-  //     console.log(data);
-  //     console.log(bullshit);
-  //   }
-  // });//END POST
+  });//END POST
 });
 
 

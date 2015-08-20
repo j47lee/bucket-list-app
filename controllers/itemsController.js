@@ -16,7 +16,7 @@ function getIndex(req, res) {
     //   items: dbResponse
     // });
 
-    res.json(dbResponse)//json test, replace with views when ready
+    res.json(dbResponse);//json test, replace with views when ready
 
   });
 }
