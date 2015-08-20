@@ -16,14 +16,11 @@ var session      = require('express-session');
 
 var configDB = require('./config/database.js');
 
+
 // configuration ===============================================================
 mongoose.connect(configDB.url); // connect to our database
 
 require('./config/passport')(passport); // pass passport for configuration
-
-
-
-
 
 // set up our express application
 app.use(morgan('dev')); // log every request to the console
@@ -42,6 +39,80 @@ app.use(flash()); // use connect-flash for flash messages stored in session
 // routes ======================================================================
 require('./app/routes.js')(app, passport); // load our routes and pass in our app and fully configured passport
 
+// TWITTER WEBSOCKET BEGINS ======================================================================
+var router  = express.Router();
+var server  = require('http').createServer(app);
+
+var io = require('socket.io')(server);
+var Twit = require('twit');
+var twitter = new Twit({
+  consumer_key: process.env.TWITTER_CONSUMER_KEY,
+  consumer_secret: process.env.TWITTER_CONSUMER_SECRET,
+  access_token: process.env.TWITTER_ACCESS_TOKEN,
+  access_token_secret: process.env.TWITTER_ACCESS_TOKEN_SECRET
+});
+console.log(twitter);
+
+var stream = twitter.stream('statuses/filter', {track: 'cowboys'});
+
+io.on('connect', function(socket){
+  stream.on('tweet', function(tweet){
+    var data = {};
+    data.name = tweet.user.name;
+    data.screen_name = tweet.user.screen_name;
+    data.text = tweet.text;
+    data.user_profile_image = tweet.user.profile_image_url;
+    socket.emit('tweets', data);
+  });
+});
+
+
+// TWITTER API ======================================================================
+var TwitterAPI = require('twitter');
+
+var client = new TwitterAPI({
+  consumer_key: process.env.TWITTER_CONSUMER_KEY,
+  consumer_secret: process.env.TWITTER_CONSUMER_SECRET,
+  access_token_key: process.env.TWITTER_ACCESS_TOKEN,
+  access_token_secret: process.env.TWITTER_ACCESS_TOKEN_SECRET
+});
+
+// temporary routing to display twitter API
+router.get('/test-twitter-api/:search', function(req, res) {
+  client.get('search/tweets', {q: req.params.search}, function(err, tweets){
+    if (err) {
+      console.log(err);
+      return;
+    }
+    else {
+      var userObj = { users: [] };
+      for (var i = 0; i < tweets.statuses.length; i++) {
+        var userURL = 'https://twitter.com/' + tweets.statuses[i].user.screen_name;
+        var userScreenName = tweets.statuses[i].user.screen_name;
+        var userImg = tweets.statuses[i].user.profile_image_url;
+        var userImgBig = userImg.replace("normal", "400x400");
+        var userText = tweets.statuses[i].text;
+        var userTextSplit = userText.split(' ')
+        var user = {
+          url: userURL,
+          name: userScreenName,
+          imgSmall: userImg,
+          imgBig: userImgBig,
+          text: userText,
+          words: userTextSplit
+        };
+        userObj.users.push(user);
+      }
+      res.json(userObj);
+    }
+  });
+});
+
+
+
 // launch ======================================================================
-app.listen(port);
+server.listen(port);
 console.log('The magic happens on port ' + port);
+
+
+module.exports = app;
