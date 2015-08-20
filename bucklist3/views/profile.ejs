@@ -1,10 +1,14 @@
 <!-- views/profile.ejs -->
-<!doctype html>
+<!DOCTYPE html>
 <html>
 <head>
-    <title>Node Authentication</title>
-    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
+    <meta charset="utf-8">
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <link rel="stylesheet" href="stylesheets/style.css">
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="javascript/ajax.js"></script>
+    <title>BucketList</title>
 
     <!-- twitter -->
     <script type="text/javascript" src="/socket.io/socket.io.js"></script>
@@ -23,61 +27,65 @@
 
     </style>
 </head>
-<body>
 
+  <body>
+    <!--NAV BAR-->
+    <nav class="navbar navbar-inverse">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="/">BucketList</a>
+        </div>
+        <div>
+          <ul class="nav navbar-nav">
+            <li><a href="/">Home</a></li>
+            <li><a href="/logout">Log Out</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <!-- NAV BAR END -->
+  <!-- CONTAINTER -->
+  <div class="container">
 
-<div class="container">
-
-
-    <div class="page-header text-center">
-        <h1><span class="fa fa-anchor"></span> Profile Page</h1>
-        <a href="/logout" class="btn btn-default btn-sm">Logout</a>
-    </div>
+      <div class="page-header text-center">
+          <h1><span class="fa fa-anchor"></span> Profile Page</h1>
+          <a href="/logout" class="btn btn-default btn-sm">Logout</a>
+      </div>
 
     <div class="row">
-
         <!-- LOCAL INFORMATION -->
         <div class="col-sm-6">
-            <div class="well">
-                <h3><span class="fa fa-user"></span> Local</h3>
-
-                    <p>
-                        <strong>id</strong>: <%= user._id %><br>
-                        <strong>email</strong>: <%= user.local.email %><br>
-                        <strong>password</strong>: <%= user.local.password %>
-                    </p>
-
-            </div>
+          <div class="well">
+            <h3><span class="fa fa-user"></span> Local</h3>
+              <p>
+                  <strong>id</strong>: <%= user._id %><br>
+                  <strong>email</strong>: <%= user.local.email %><br>
+                  <strong>password</strong>: <%= user.local.password %>
+              </p>
+          </div>
         </div>
-
     </div>
 
-<!-- twitter -->
-<div id="tweet-container"></div>
+      <!-- twitter -->
+      <div id="tweet-container"></div>
 
-</div>
+  </div>
+  <!-- CONTAINTER END -->
+  </body>
 
+  <script>
 
+      var socket = io();
 
+      socket.on('connect', function(){
+        console.log('Connected!');
+      });
+      socket.on('tweets', function(tweet){
+        var html = '<div class="row"><div class="col-md-6 col-md-offset-3 tweet"><img src="' + tweet.user_profile_image + '" class="avatar pull-left"/><div class="names"><span class="full-name">' + tweet.name + ' </span><span class="username">@' +tweet.screen_name + '</span></div><div class="contents"><span class="text">' + tweet.text + '</span></div></div></div>';
+        $('#tweet-container').prepend(html);
+        console.log(tweet);
+      });
 
-</body>
-
-
-<script>
-
-    var socket = io();
-
-    socket.on('connect', function(){
-      console.log('Connected!');
-    });
-    socket.on('tweets', function(tweet){
-      var html = '<div class="row"><div class="col-md-6 col-md-offset-3 tweet"><img src="' + tweet.user_profile_image + '" class="avatar pull-left"/><div class="names"><span class="full-name">' + tweet.name + ' </span><span class="username">@' +tweet.screen_name + '</span></div><div class="contents"><span class="text">' + tweet.text + '</span></div></div></div>';
-      $('#tweet-container').prepend(html);
-      console.log(tweet);
-    });
-
-</script>
-
-
+  </script>
 
 </html>

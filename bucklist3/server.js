@@ -22,13 +22,13 @@ mongoose.connect(configDB.url); // connect to our database
 
 require('./config/passport')(passport); // pass passport for configuration
 
-
 // set up our express application
 app.use(morgan('dev')); // log every request to the console
 app.use(cookieParser()); // read cookies (needed for auth)
 app.use(bodyParser()); // get information from html forms
 
 app.set('view engine', 'ejs'); // set up ejs for templating
+app.use(express.static(__dirname + '/public'));//set up for stylesheets and scripts
 
 // required for passport
 app.use(session({ secret: 'ilovescotchscotchyscotchscotch' })); // session secret
@@ -39,7 +39,7 @@ app.use(flash()); // use connect-flash for flash messages stored in session
 // routes ======================================================================
 require('./app/routes.js')(app, passport); // load our routes and pass in our app and fully configured passport
 
-// TWITTER WEBSOCKET BEGINS //////////////////////////////////////////////////////////////////////////////
+// TWITTER WEBSOCKET BEGINS ======================================================================
 var router  = express.Router();
 var server  = require('http').createServer(app);
 
@@ -65,12 +65,9 @@ io.on('connect', function(socket){
     socket.emit('tweets', data);
   });
 });
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-
-
-// TWITTER API //////////////////////////////////////////////////////////////////////////////////////////////////////////
+// TWITTER API ======================================================================
 var TwitterAPI = require('twitter');
 
 var client = new TwitterAPI({
@@ -111,7 +108,6 @@ router.get('/test-twitter-api/:search', function(req, res) {
   });
 });
 
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
 // launch ======================================================================
