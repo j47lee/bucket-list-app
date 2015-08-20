@@ -1,35 +1,20 @@
 $(document).ready(function(){//Load JQuery on Ready
-
+  
+// USER LOG IN REQUEST
+// ==========================================================
 var loginForm   = $('#login-form');
 var loginButton = $('#login-btn');
 
-loginForm.on('submit',function(event) {
-  event.preventDefault();
-  var userInfo = $(this).serialize();
-  console.log(userInfo);
-
-
-  // GET
-  // $.ajax({
-  //   method: 'get',
-  //   url: "http://localhost:8080/users",
-  //   crossDomain : true,
-  //   success : function (returnedData) {
-  //     console.log("success");
-  //     console.log(returnedData);
-  //     console.log(userInfo);
-  //   },
-  //   error: function (error, data) {
-  //     console.log('error handler');
-  //     console.log(error);
-  //     console.log(data);
-  //   }
-  // });//END GET
+loginForm.on('submit',function(evt) {
+  evt.preventDefault();
+  console.log(evt.target.password.value + evt.target.email.value);
 
   $.ajax({
-    method: 'Get',
-    url: "http://localhost:8080/users",
-    data: JSON.stringify({userInfo}),
+    method: 'POST',
+    url: "http://localhost:8080/login",
+    data : JSON.stringify({user: { email: evt.target.email.value ,password: evt.target.password.value}}),
+    contentType: 'application/json; charset=UTF-8',
+    dataType: 'json',
     success : function (returnedData) {
       console.log("success");
       console.dir(returnedData);

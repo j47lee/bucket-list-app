@@ -2,12 +2,27 @@ var express     = require('express');
 var router      = express.Router();
 // var superPhrase = process.env.NAMEOFTHECONSTANT
 var app         = express();
+var User        = require('../models/User');
+
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
 });
 
+//LOG IN ROUTE
+router.post('/login',function (req,res) {
+  var UserBody = req.body.user;
+  User.findOne({email:UserBody.email}, function (error, user) {
+    if(error) return console.log(error);
+    res.json(user);
+  });
+});
+
+//SIGN UP ROUTE
+router.get('/sign-up',function(req,res,next) {
+  res.render('sign-up');
+});
 
 // // login token auth
 // app.post('/signin',function(req, res){
@@ -36,13 +51,7 @@ router.get('/', function(req, res, next) {
 // });
 
 
-router.get('/sign-up',function(req,res,next) {
-  res.render('sign-up');
-});
 
-router.get('/login',function (req,res) {
-  res.render('login');
-});
 
 
 module.exports = router;
