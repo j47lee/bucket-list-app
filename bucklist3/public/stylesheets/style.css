@@ -1,5 +1,9 @@
+/******************************************************
+BOOTSTRAP OVERRIDE
+******************************************************/
+
 .background-container{
-  height: 400px;
+  height: 500px;
   background: url(/images/nature-sunny-people-clouds.jpg)bottom no-repeat;
   background-size: cover;
 }
@@ -7,6 +11,13 @@
 .navbar{
   margin: 0 ;
   padding: 7px;
+  border-radius: 0;
+}
+
+.navbar-inverse{
+  background-color: rgba(69, 203, 237, 0.68);
+  border: none;
+
 }
 
 h1{
@@ -17,15 +28,63 @@ h1{
   padding: 0;
 }
 
-.home-page-options{
-  padding: 100px 0;
+header{
+  padding: 100px 0 0 0;
+  width: 75%;
+  margin: 0 auto;
 }
 
-.home-page-options h1{
-  font-size: 5em;
+header h1{
+  font-size: 4em;
   color: white;
 }
 
-.home-page-options h1{
+header p{
   color: white;
+}
+
+a.navbar-brand:hover,
+a.navbar-brand:visited {
+    color: white   !important;
+}
+
+.home-page-options h1,
+.home-page-options p{
+  color: white;
+}
+
+ul.nav li a,
+ul.nav li a:visited {
+    color: white !important;
+}
+
+ul.nav li a:hover,
+ul.nav li a:active {
+    color: #787878 !important;
+}
+
+/******************************************************
+HOME PAGE
+******************************************************/
+.headline{
+  height: 500px;
+  background-color: black;
+}
+
+/******************************************************
+FOOTER
+******************************************************/
+
+footer {
+   position:fixed;
+   left: 0px;
+   bottom: 0px;
+   height: 50px;
+   width: 100%;
+   background: #3A3A3A;
+}
+
+footer p{
+  padding-top: 15px;
+  color: #828282;
 }
