@@ -7,6 +7,7 @@ router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
 });
 
+
 // login token auth
 app.post('/signin',function(req, res){
   var UserBody = req.body.user;
@@ -31,6 +32,15 @@ app.post('/signin',function(req, res){
       }
     }
   })
+});
+
+
+router.get('/sign-up',function(req,res,next) {
+  res.render('sign-up');
+});
+
+router.get('/login',function (req,res) {
+  res.render('login');
 });
 
 

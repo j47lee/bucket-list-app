@@ -69,9 +69,9 @@ io.on('connect', function(socket){
 // TWITTER WEBSOCKET ENDS ////////////////////////////////////////////////////////////////////////////////////////////
 
 //temporary routing for index page to display twitter ////////////////////////////////////////////////////////////////
-router.get('/', function(req, res) {
-  res.render('index', { header: 'Twitter streams'});
-});
+// router.get('/', function(req, res) {
+//   res.render('user', { header: 'Twitter streams'});
+// });
 
 
 // view engine setup
