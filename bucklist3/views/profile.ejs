@@ -40,7 +40,15 @@
         <div class="col-sm-6">
           <div class="well">
               <p>
-                <strong>email</strong><br>  User Items will go here<br>
+                <strong><br>   <% for( i = 0; i < user.items.length; i++){ %>
+                    <p>
+                        Title: <%= user.items[i].title %><br>
+                        Entry: <%= user.items[i].entry %><br>
+                        Catagory: <%= user.items[i].category %><br>
+                    </p>
+
+                <% }; %>
+                </strong>
                 <a class="btn btn-default" href="/newitem" role="button">New Item</a>
               </p>
           </div>
