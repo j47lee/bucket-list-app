@@ -53,7 +53,7 @@
 
       <!-- twitter tweets -->
       <h1>TWEETS</h1>
-      <a href="#" id="submit">get tweets</a>
+      <button type="button" name="button">GET TWEETS</button>
 
       <!-- twitter socket -->
       <div id="tweet-container"></div>
@@ -72,9 +72,8 @@
 
 
   <script>
-  $(document).ready(function() {
 
-
+      // twitter socket
       var socket = io();
       socket.on('connect', function(){
         console.log('Connected!');
@@ -86,25 +85,6 @@
       });
 
 
-      // TWITTER API SECTION ========================================================
-        $('#submit').click(function(){
-          var search_term = {
-            q: 'basketball'
-          };
-          search(search_term);
-        });
-      });
-
-      function search(search_term) {
-        $.ajax({
-          url: '/twitter.ejs',
-          dataType: 'jsonp',
-          success: function(data) {
-            console.dir(data);
-          }
-        });
-
-    } //end document ready
 
 
 
