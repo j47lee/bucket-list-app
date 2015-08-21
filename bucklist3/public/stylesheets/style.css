@@ -70,6 +70,34 @@ HOME PAGE
   color: white;
   height: 80px;
   background-color: #006078;
+
+}
+
+
+
+.image-panel1{
+  /*background: url(/images/sea-sky-beach-holiday.jpg)bottom no-repeat;*/
+  background: linear-gradient(rgba(0, 96, 120, 0.54), transparent 50%), linear-gradient(0deg, #fff, transparent 10%),url(/images/sea-sky-beach-holiday.jpg)bottom no-repeat;;
+  height: 400px;
+  background-size: cover;
+}
+
+.image-panel2 {
+  background: linear-gradient(rgba(0, 96, 120, 0.54), transparent 50%), linear-gradient(0deg, #fff, transparent 10%), url(/images/sea-sunny-person-beach.jpg)bottom no-repeat;
+  height: 400px;
+  background-size: cover;
+}
+
+.image-panel1,
+.image-panel2 {
+  border: 10px solid #3A3A3A;
+  color: white;
+}
+.image-panel1 h4,
+.image-panel2 h4{
+  margin: 100px 0 0 0 ;
+  font-weight: bold;
+  font-size: 3em;
 }
 
 
@@ -119,4 +147,14 @@ TWITTER FEEDS ON PROFILE PAGE
     margin: 20px;
     display: inline;
     font-size: 20px;
+}
+
+
+/******************************************************
+TWITTER FEEDS ON PROFILE PAGE
+******************************************************/
+
+#login,
+#signup{
+  margin-top: 50px;
 }
