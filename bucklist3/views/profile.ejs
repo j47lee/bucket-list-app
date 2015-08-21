@@ -6,7 +6,6 @@
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
     <link rel="stylesheet" href="stylesheets/style.css">
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
     <script src="javascript/ajax.js"></script>
     <title>BucketList</title>
 
@@ -83,11 +82,17 @@
         </div>
     </div>
 
+      <h1>TWEETS</h1>
+      <ol id="tweets"></ol>
+      <a href="#" id="submit">get tweets</a>
+
       <!-- twitter -->
       <div id="tweet-container"></div>
 
+
+
   </div>
-  <!-- CONTAINTER END -->
+  <!-- CONTAINER END -->
   </body>
 
   <footer>
@@ -98,9 +103,10 @@
 
 
   <script>
+  $(document).ready(function() {
+
 
       var socket = io();
-
       socket.on('connect', function(){
         console.log('Connected!');
       });
@@ -109,6 +115,30 @@
         $('#tweet-container').prepend(html);
         // console.log(tweet);
       });
+
+
+      // TWITTER API SECTION ========================================================
+        console.log('document jquery ready!');
+        $('#submit').click(function(){
+          var search_term = {
+            q: 'basketball'
+          };
+          search(search_term);
+        });
+      });
+
+      function search(search_term) {
+        $.ajax({
+          url: './twitter.ejs',
+          dataType: 'jsonp',
+          success: function(data) {
+            console.dir(data);
+          }
+        });
+
+    } //end document ready
+
+
 
   </script>
 
