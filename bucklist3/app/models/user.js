@@ -24,6 +24,8 @@ var itemSchema = mongoose.Schema({
 var userSchema = mongoose.Schema({
 
     local            : {
+        fName        : String,
+        lName        : String,
         email        : String,
         password     : String,
     },
