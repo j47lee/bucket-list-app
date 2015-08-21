@@ -66,10 +66,12 @@ ul.nav li a:active {
 /******************************************************
 HOME PAGE
 ******************************************************/
-.headline{
-  height: 500px;
-  background-color: black;
+.banner{
+  color: white;
+  height: 80px;
+  background-color: #006078;
 }
+
 
 /******************************************************
 FOOTER
@@ -90,7 +92,7 @@ footer p{
 }
 
 /******************************************************
-TWITTER FEEDS
+TWITTER FEEDS ON PROFILE PAGE
 ******************************************************/
 
 #tweet-container {
