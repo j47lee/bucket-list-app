@@ -24,12 +24,14 @@ function searchTweets(search_term) {
 
 
   $.ajax({
-      url: 'https://api.twitter.com/1.1/search/tweets.json' + $.param(search_term),
-      dataType: 'jsonp',
+      method: 'get',
+      url: 'http://localhost:8080/twitter',
       success: function(data) {
-        console.dir(data);
-        for(item in data['results']){
-          $('#tweets').append("<div>" + data['results'][item]['text'] + "</div>")
+        for (var i = 0; i < 5; i++) {
+          console.dir(data.users[i]);
+          $('.tweet-results').append(
+            "<div class='tweets'>" +   '<a href="' + data.users[i].url + '">' + '<img src="' + data.users[i].imgSmall +'" />'  + "<p>" + data.users[i].name + "</p>" + "</div>"
+          )
         }
       },
       error: function(error,data){

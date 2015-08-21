@@ -47,7 +47,7 @@
         </div>
         <!-- TWITTER -->
         <div class="col-sm-6 well" id="tweet-container">
-          <div class="col-lg-6">
+          <div class="row center-block">
             <div class="input-group">
               <span class="input-group-btn">
                 <button id="search-button" class="btn btn-default" type="button">Go!</button>
@@ -55,7 +55,7 @@
               <input id="search-field" type="text" class="form-control" placeholder="Search for Tweets">
             </div><!-- /input-group -->
           </div><!-- /.col-lg-6 -->
-          <div class="tweet-results">
+          <div class="tweet-results row">
             <%# TWEETS WILL POPULATE HERE%>
           </div>
         </div>
@@ -63,12 +63,6 @@
 
     </div>
 
-      <!-- twitter tweets -->
-      <h1>TWEETS</h1>
-      <button type="button" name="button">GET TWEETS</button>
-
-      <!-- twitter socket -->
-      <div id="tweet-container"></div>
 
 
 
@@ -83,7 +77,7 @@
   </footer>
 
 
-  <script>
+  <%# <script>
       // twitter socket
       var socket = io();
       socket.on('connect', function(){
@@ -94,7 +88,7 @@
         $('#tweet-container').prepend(html);
         // console.log(tweet);
       });
-  </script>
+  </script>%>
 
 
 </html>
