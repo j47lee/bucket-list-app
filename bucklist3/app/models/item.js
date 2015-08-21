@@ -4,12 +4,12 @@ var bcrypt      = require('bcrypt-nodejs');
 //create a schema
 var itemSchema = mongoose.Schema({
 
-    title             : {
+    bucket_item       : {
         type          : String,
         required      : true,
     },
-    description       : String,
     entry             : String,
+    catagory          : String,
     created_at        : {
         type          : Date,
         default       : Date.now,
