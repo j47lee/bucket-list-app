@@ -1,3 +1,6 @@
+var User       = require('../app/models/user');
+var userSchema = require('../app/models/user');
+
 // app/routes.js
 module.exports = function(app, passport) {
 
@@ -54,11 +57,25 @@ module.exports = function(app, passport) {
     });
 
     // process the newitem form
-    app.post('/newitem', passport.authenticate('local-signup', {
-        successRedirect : '/profile', // redirect to the secure profile section
-        failureRedirect : '/signup', // redirect back to the signup page if there is an error
-        failureFlash : true // allow flash messages
-    }));
+    app.post('/newitem', function(req, res){
+        // // console.log('POST REQ RECVD');
+        // // console.log('body:', request.body);
+        // // var item            = new User();
+        // console.log( User);
+        // console.log("*********");
+        // console.log(userSchema);
+        // // console.log("*********item- " + item);
+
+        // item.title          =req.body.bucket_item;
+        // item.entry          =req.body.entry;
+        // item.category       =req.body.category;
+        //
+        // if (!item.save){ return res.json({message: "Could not save item"})}
+        // else{ res.redirect("/profile")};
+
+    });
+
+
     // =====================================
     // PROFILE SECTION =====================
     // =====================================
