@@ -63,13 +63,7 @@
 
     </div>
 
-      <!-- twitter tweets -->
-      <h1>TWEETS</h1>
-      <button type="button" name="button">GET TWEETS</button>
-
-      <!-- twitter socket -->
-      <div id="tweet-container"></div>
-
+      
 
 
   </div>
@@ -83,7 +77,7 @@
   </footer>
 
 
-  <script>
+  <%# <script>
       // twitter socket
       var socket = io();
       socket.on('connect', function(){
@@ -94,7 +88,7 @@
         $('#tweet-container').prepend(html);
         // console.log(tweet);
       });
-  </script>
+  </script>%>
 
 
 </html>
