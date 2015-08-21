@@ -1,3 +1,6 @@
+var User       = require('../app/models/user');
+var userSchema = require('../app/models/user');
+
 // app/routes.js
 module.exports = function(app, passport) {
 
@@ -54,11 +57,24 @@ module.exports = function(app, passport) {
     });
 
     // process the newitem form
-    app.post('/newitem', passport.authenticate('local-signup', {
-        successRedirect : '/profile', // redirect to the secure profile section
-        failureRedirect : '/signup', // redirect back to the signup page if there is an error
-        failureFlash : true // allow flash messages
-    }));
+    app.post('/newitem', function(req, res){
+        console.log('body:', req.body);
+        User.findOne({_id: req.body.user_id}, function(err, user){
+            if(err) return console.log(err);
+            // create an item object
+            var item = {};
+            item.title          =req.body.bucket_item;
+            item.entry          =req.body.entry;
+            item.category       =req.body.category;
+            // push object into user-item schema
+            user.items.push(item);
+            if (user.save()){ res.redirect("/profile");}
+            else { res.json({message: "Could not save item"});
+            }
+        });
+    });
+
+
     // =====================================
     // PROFILE SECTION =====================
     // =====================================

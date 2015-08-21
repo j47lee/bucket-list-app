@@ -9,8 +9,8 @@ var itemSchema = mongoose.Schema({
         type          : String,
         required      : true,
     },
-    description       : String,
     entry             : String,
+    category          : String,
     created_at        : {
         type          : Date,
         default       : Date.now,
