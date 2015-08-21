@@ -28,7 +28,27 @@
     <!-- NAV BAR END -->
     <!-- CONTAINER -->
     <div class="container-fluid">
-
+      <!-- START OF ITEM SUBMIT FIELD -->
+      <form action="#" method="post">
+          <div class="form-group">
+              <label>Bucket Item</label>
+              <input type="text" class="form-control" name = "bucket_item" placeholder="What is your Bucket Item?">
+          </div>
+          <div class="form-group">
+              <label>Entry</label>
+             <textarea class="form-control" name= "entry" placeholder="How would you describe your item?" rows="8" cols="40"></textarea>
+          </div>
+          <div class="form-group">
+              <label>Category</label>
+              <select class="form-contorl" name="category">
+                  <option value="event">Event</option>
+                  <option value="milestone">Milestone</option>
+                  <option value="accomplishment">Accomplishment</option>
+              </select>
+          </div>
+          <button id="submit-item" type="submit" class="btn btn-warning btn-lg">Add to bucket!</button>
+      </form>
+      <!-- ***END OF ITEM SUBMIT FIELD -->
     </div>
     <!-- CONTAINER END-->
   </body>
