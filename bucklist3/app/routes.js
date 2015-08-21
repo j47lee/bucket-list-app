@@ -8,6 +8,7 @@ module.exports = function(app, passport) {
     // HOME PAGE (with login links) ========
     // =====================================
     app.get('/', function(req, res) {
+        console.log(req.user);
         res.render('index.ejs', { user : req.user }); // load the index.ejs file
     });
 
@@ -78,26 +79,29 @@ module.exports = function(app, passport) {
 
     // process the newitem form
     app.post('/newitem', function(req, res){
-        ({user : req.user}),
+
         console.log('body:', req.body);
-        User.findOne({_id: req.body.user_id}, function(err, user){
+
+        User.findOne({_id: req.user._id}, function(err, user){
             if(err) return console.log(err);
             // create an item object
             var item = {};
-            console.log( "item: " +item);
-            console.log( "user: " + req.body.user);
+
+            console.log( "user-ID: " + req.user._id);
             item.title          =req.body.bucket_item;
             item.entry          =req.body.entry;
             item.category       =req.body.category;
+            console.log( "item: " +item);
             // push object into user-item schema
-            // user.items.push(item);
-            // if (user.save()){ res.redirect("/profile");}
+            user.items.push(item);
+                // if (user.save()){ res.redirect("/profile"), err}
             // else { res.json({message: "Could not save item"});
-            // }
+            user.save(function (err, user) {
+                if (err) return res.json({message: "Could not save item", error: err});
+                res.redirect("/profile");
+            });
         });
     });
-
-
 
 };
 
