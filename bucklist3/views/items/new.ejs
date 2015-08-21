@@ -18,7 +18,7 @@
         </div>
         <div>
           <ul class="nav navbar-nav">
-            <li><a href="/">Home</a></li>
+            <li><a href="/profile">Home</a></li>
             <li><a href="/signup">Sign Up</a></li>
             <li><a href="/login">Log In</a></li>
           </ul>
@@ -31,10 +31,8 @@
     <div class="container-fluid">
 
         <div class="container">
-<%= user.id %>
         <div class="page-header text-center">
-            <h1><span class="fa fa-anchor"></span> Profile Page</h1>
-            <a href="/logout" class="btn btn-default btn-sm">Logout</a>
+            <h1><span class="fa fa-user"></span> <%= user.local.email %></h1>
         </div>
 
             <div class="row">

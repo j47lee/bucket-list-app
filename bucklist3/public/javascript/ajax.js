@@ -50,4 +50,5 @@ function searchTweets(search_term) {
 } //end searchTweets function
 
 
+
 });//End Document Ready
