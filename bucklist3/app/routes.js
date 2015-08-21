@@ -79,7 +79,6 @@ module.exports = function(app, passport) {
     app.get('/newitem', isLoggedIn, function(req, res) {
         // render new item page
         res.render('items/new', {user : req.user});
-
     });
 
     // process the newitem form
@@ -107,9 +106,37 @@ module.exports = function(app, passport) {
             });
         });
     });
+    // EDIT ITEMS
+    app.get('/edititem', isLoggedIn, function(req, res) {
+        // render edit item page
+        res.render('items/edit', {user : req.user});
+    });
+    app.post('/edititem', function(req, res){
+
+        console.log('body:', req.body);
+
+        User.findOne({_id: req.user._id}, function(err, user){
+            if(err) return console.log(err);
+            // create an item object
+            var item = {};
+
+            console.log( "user-ID: " + req.user._id);
+            item.title          =req.body.bucket_item;
+            item.entry          =req.body.entry;
+            item.category       =req.body.category;
+            console.log( "item: " +item);
+
+            user.items.push(item);
+                // if (user.save()){ res.redirect("/profile"), err}
+            // else { res.json({message: "Could not save item"});
+            user.save(function (err, user) {
+                if (err) return res.json({message: "Could not save item", error: err});
+                res.redirect("/profile");
+            });
+        });
+    });
 
 };
-
 // route middleware to make sure a user is logged in
 function isLoggedIn(req, res, next) {
 
