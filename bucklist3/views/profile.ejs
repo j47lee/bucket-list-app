@@ -38,7 +38,7 @@
     <div class="row">
         <!-- USER INFORMATION -->
         <div class="col-sm-6">
-          <div class="well">
+          <div class="well item-container">
               <p>
                 <div class="list-item">
                 <strong id='item'><br>   <% for( i = 0; i < user.items.length; i++){ %>
@@ -55,7 +55,7 @@
           </div>
         </div>
         <!-- TWITTER -->
-        <div class="col-sm-6 well">
+        <div class="col-sm-6 well followers">
           <div class="row center-block">
             <div class="input-group">
               <span class="input-group-btn">
@@ -74,15 +74,17 @@
     </div>
 
     <!-- TWITTER WEB SOCKET SUBMIT FORM -->
-    <p1 id="twitterSearchFor"></p1>
-    <form action="/" name="search">
-    <div class="form-group">
-      <input id="searchTerm" type="text" class="form-control" placeholder="Search Tweets">
-    </div>
-    <input id="tweetSocketBtn" type="submit" class="btn btn-default">
-    </form>
-    <div id="tweet-container">
-    <!-- WEB SOCKET TWEETS POPULATE HERE -->
+    <div class="row socket-container">
+      <p1 id="twitterSearchFor"></p1>
+      <form action="/" name="search">
+      <div class="form-group">
+        <input id="searchTerm" type="text" class="form-control" placeholder="Search Tweets">
+      </div>
+      <input id="tweetSocketBtn" type="submit" class="btn btn-default">
+      </form>
+      <div id="tweet-container" class="well">
+      <!-- WEB SOCKET TWEETS POPULATE HERE -->
+      </div>
     </div>
 
   </div>
