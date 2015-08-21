@@ -66,8 +66,7 @@ io.on('connect', function(socket){
   });
 });
 
-
-// TWITTER API ======================================================================
+// TWITTER API SECTION ======================================================================
 var TwitterAPI = require('twitter');
 
 var client = new TwitterAPI({
@@ -76,10 +75,10 @@ var client = new TwitterAPI({
   access_token_key: process.env.TWITTER_ACCESS_TOKEN,
   access_token_secret: process.env.TWITTER_ACCESS_TOKEN_SECRET
 });
-
-// temporary routing to display twitter API
-router.get('/test-twitter-api/:search', function(req, res) {
-  client.get('search/tweets', {q: req.params.search}, function(err, tweets){
+// Routing to display twitter API
+app.get('/twitter', function(req, res) {
+  client.get('search/tweets', {q: 'basketball'}, function(err, tweets, response){
+    console.log(tweets);
     if (err) {
       console.log(err);
       return;
@@ -92,7 +91,7 @@ router.get('/test-twitter-api/:search', function(req, res) {
         var userImg = tweets.statuses[i].user.profile_image_url;
         var userImgBig = userImg.replace("normal", "400x400");
         var userText = tweets.statuses[i].text;
-        var userTextSplit = userText.split(' ')
+        var userTextSplit = userText.split(' ');
         var user = {
           url: userURL,
           name: userScreenName,
@@ -105,10 +104,9 @@ router.get('/test-twitter-api/:search', function(req, res) {
       }
       res.json(userObj);
     }
+      console.log(tweets);
   });
 });
-
-
 
 // launch ======================================================================
 server.listen(port);
