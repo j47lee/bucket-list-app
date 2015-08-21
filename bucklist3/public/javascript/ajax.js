@@ -3,8 +3,45 @@ var loginForm    = $('#login-form');
 var loginButton  = $('#login-btn');
 var signUpForm   = $('#sign-up-form');
 var signUpButton = $('#sign-up-btn');
-// USER LOG IN REQUEST
+var searchField  = $('#search-field');
+var searchButton = $('#search-button');
+
+
+// AJAX TWEETS
 // ==========================================================
+
+searchButton.on('click',function () {
+  var searchTerm = searchField.val();
+  var search_term = {
+    q: searchTerm
+  };
+
+  searchTweets(search_term)
+});
+
+function searchTweets(search_term) {
+  console.dir(search_term);
+
+
+  $.ajax({
+      url: 'https://api.twitter.com/1.1/search/tweets.json' + $.param(search_term),
+      dataType: 'jsonp',
+      success: function(data) {
+        console.dir(data);
+        for(item in data['results']){
+          $('#tweets').append("<div>" + data['results'][item]['text'] + "</div>")
+        };
+      },
+      error: function(error,data){
+        console.log(error);
+        console.log(data);
+      }
+
+  });
+
+};
+
+
 
 
 // USER LOG IN REQUEST

@@ -48,8 +48,22 @@
               </p>
           </div>
         </div>
-        <!-- twitter -->
-        <div class="col-sm-6 well" id="tweet-container"></div>
+        <!-- TWITTER -->
+        <div class="col-sm-6 well" id="tweet-container">
+          <div class="col-lg-6">
+            <div class="input-group">
+              <span class="input-group-btn">
+                <button id="search-button" class="btn btn-default" type="button">Go!</button>
+              </span>
+              <input id="search-field" type="text" class="form-control" placeholder="Search for Tweets">
+            </div><!-- /input-group -->
+          </div><!-- /.col-lg-6 -->
+          <div class="tweet-results">
+            <%# TWEETS WILL POPULATE HERE%>
+          </div>
+        </div>
+        <!-- TWITTER END -->
+
     </div>
   </div>
   <!-- CONTAINTER END -->
@@ -62,7 +76,7 @@
   </footer>
 
 
-  <script>
+  <%# <script>
 
       var socket = io();
 
@@ -75,6 +89,6 @@
         // console.log(tweet);
       });
 
-  </script>
+  </script>%>
 
 </html>
