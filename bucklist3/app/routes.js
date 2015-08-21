@@ -8,7 +8,7 @@ module.exports = function(app, passport) {
     // HOME PAGE (with login links) ========
     // =====================================
     app.get('/', function(req, res) {
-        res.render('index.ejs'); // load the index.ejs file
+        res.render('index.ejs', { user : req.user }); // load the index.ejs file
     });
 
     // =====================================
@@ -16,7 +16,6 @@ module.exports = function(app, passport) {
     // =====================================
     // show the login form
     app.get('/login', function(req, res) {
-
         // render the page and pass in any flash data if it exists
         res.render('login.ejs', { message: req.flash('loginMessage') });
     });
@@ -49,30 +48,6 @@ module.exports = function(app, passport) {
         failureFlash : true // allow flash messages
     }));
 
-    // add new item to the user profile
-    app.get('/newitem', function(req, res) {
-        // render new item page
-        res.render('items/new.ejs');
-        user : req.user; // get the user out of session and pass to template
-    });
-
-    // process the newitem form
-    app.post('/newitem', function(req, res){
-        console.log('body:', req.body);
-        User.findOne({_id: req.body.user_id}, function(err, user){
-            if(err) return console.log(err);
-            // create an item object
-            var item = {};
-            item.title          =req.body.bucket_item;
-            item.entry          =req.body.entry;
-            item.category       =req.body.category;
-            // push object into user-item schema
-            user.items.push(item);
-            if (user.save()){ res.redirect("/profile");}
-            else { res.json({message: "Could not save item"});
-            }
-        });
-    });
 
 
     // =====================================
@@ -93,6 +68,35 @@ module.exports = function(app, passport) {
         req.logout();
         res.redirect('/');
     });
+
+    // add new item to the user profile
+    app.get('/newitem', isLoggedIn, function(req, res) {
+        // render new item page
+        res.render('items/new', {user : req.user});
+
+    });
+
+    // process the newitem form
+    app.post('/newitem', function(req, res){
+        ({user : req.user}),
+        console.log('body:', req.body);
+        User.findOne({_id: req.body.user_id}, function(err, user){
+            if(err) return console.log(err);
+            // create an item object
+            var item = {};
+            console.log( "item: " +item);
+            console.log( "user: " + req.body.user);
+            item.title          =req.body.bucket_item;
+            item.entry          =req.body.entry;
+            item.category       =req.body.category;
+            // push object into user-item schema
+            // user.items.push(item);
+            // if (user.save()){ res.redirect("/profile");}
+            // else { res.json({message: "Could not save item"});
+            // }
+        });
+    });
+
 
 
 };
