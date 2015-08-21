@@ -26,7 +26,6 @@ var client = new TwitterAPI({
   access_token_secret: process.env.TWITTER_ACCESS_TOKEN_SECRET
 });
 
-
 // configuration ===============================================================
 mongoose.connect(configDB.url); // connect to our database
 
@@ -49,7 +48,7 @@ app.use(flash()); // use connect-flash for flash messages stored in session
 // routes ======================================================================
 require('./app/routes.js')(app, passport); // load our routes and pass in our app and fully configured passport
 
-// TWITTER WEBSOCKET BEGINS ======================================================================
+// TWITTER WEB SOCKET ======================================================================
 var router  = express.Router();
 var server  = require('http').createServer(app);
 
@@ -62,8 +61,30 @@ var twitter = new Twit({
   access_token_secret: process.env.TWITTER_ACCESS_TOKEN_SECRET
 });
 console.log(twitter);
+var stream;
+// var searchTerm;
+io.on('connect', function(socket){
 
-// Routing to display twitter API
+  socket.on('updateTerm', function(searchTerm){
+    socket.emit('updatedTerm', searchTerm);
+    console.log(searchTerm);
+    if(stream){
+      console.log('stopped stream');
+      stream.stop();
+    }
+  stream = twitter.stream('statuses/filter', {track: searchTerm, language: 'en'});
+  stream.on('tweet', function(tweet){
+    var data = {};
+      data.name = tweet.user.name;
+      data.screen_name = tweet.user.screen_name;
+      data.text = tweet.text;
+      data.user_profile_image = tweet.user.profile_image_url;
+      socket.emit('tweets', data);
+  });
+});
+});
+
+// TWITTER API ==================================================================================
 app.post('/twitter', function(req, res) {
   client.get('search/tweets', req.body, function(err, tweets, response){
     // console.log(tweets);
@@ -96,18 +117,26 @@ app.post('/twitter', function(req, res) {
   });
 });
 
-var stream = twitter.stream('statuses/filter', {track: 'basketball'});
 
-io.on('connect', function(socket){
-  stream.on('tweet', function(tweet){
-    var data = {};
-    data.name = tweet.user.name;
-    data.screen_name = tweet.user.screen_name;
-    data.text = tweet.text;
-    data.user_profile_image = tweet.user.profile_image_url;
-    socket.emit('tweets', data);
-  });
-});
+// var stream = twitter.stream('statuses/filter', {track: 'basketball'});
+//
+// io.on('connect', function(socket){
+//   stream.on('tweet', function(tweet){
+//     var data = {};
+//     data.name = tweet.user.name;
+//     data.screen_name = tweet.user.screen_name;
+//     data.text = tweet.text;
+//     data.user_profile_image = tweet.user.profile_image_url;
+//     socket.emit('tweets', data);
+//   });
+// });
+
+
+
+
+
+
+
 
 // launch ======================================================================
 server.listen(port);

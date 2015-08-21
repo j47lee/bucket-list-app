@@ -30,7 +30,7 @@ function searchTweets(search_term) {
       dataType   : 'json',
       success: function(data) {
         for (var i = 0; i < 5; i++) {
-          console.dir(data.users[i]);
+          // console.dir(data.users[i]);
           $('.tweet-results').append(
             "<div class='tweets'>" +   '<a href="' + data.users[i].url + '">' + '<img src="' + data.users[i].imgSmall +'" />'  + "<p>" + data.users[i].name + "</p>" + "</div>"
           )
@@ -43,7 +43,14 @@ function searchTweets(search_term) {
 
   });
 
-}
+
+
+
+
+
+
+
+} //end searchTweets function
 
 
 
