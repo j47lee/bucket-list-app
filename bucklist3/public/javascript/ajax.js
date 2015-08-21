@@ -22,10 +22,12 @@ searchButton.on('click',function () {
 function searchTweets(search_term) {
   console.dir(search_term);
 
-
   $.ajax({
-      method: 'get',
-      url: 'http://localhost:8080/twitter',
+      method: 'post',
+      url: '/twitter',
+      data : JSON.stringify(search_term),
+      contentType: 'application/json; charset=UTF-8',
+      dataType   : 'json',
       success: function(data) {
         for (var i = 0; i < 5; i++) {
           console.dir(data.users[i]);

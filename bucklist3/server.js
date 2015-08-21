@@ -25,38 +25,7 @@ var client = new TwitterAPI({
   access_token_key: process.env.TWITTER_ACCESS_TOKEN,
   access_token_secret: process.env.TWITTER_ACCESS_TOKEN_SECRET
 });
-// Routing to display twitter API
-app.get('/twitter', function(req, res) {
-  client.get('search/tweets', {q: 'basketball'}, function(err, tweets, response){
-    // console.log(tweets);
-    if (err) {
-      console.log(err);
-      return;
-    }
-    else {
-      var userObj = { users: [] };
-      for (var i = 0; i < tweets.statuses.length; i++) {
-        var userURL = 'https://twitter.com/' + tweets.statuses[i].user.screen_name;
-        var userScreenName = tweets.statuses[i].user.screen_name;
-        var userImg = tweets.statuses[i].user.profile_image_url;
-        var userImgBig = userImg.replace("normal", "400x400");
-        var userText = tweets.statuses[i].text;
-        var userTextSplit = userText.split(' ');
-        var user = {
-          url: userURL,
-          name: userScreenName,
-          imgSmall: userImg,
-          imgBig: userImgBig,
-          text: userText,
-          words: userTextSplit
-        };
-        userObj.users.push(user);
-      }
-      res.json(userObj);
-    }
-      console.log(userObj);
-  });
-});
+
 
 // configuration ===============================================================
 mongoose.connect(configDB.url); // connect to our database
@@ -93,6 +62,39 @@ var twitter = new Twit({
   access_token_secret: process.env.TWITTER_ACCESS_TOKEN_SECRET
 });
 console.log(twitter);
+
+// Routing to display twitter API
+app.post('/twitter', function(req, res) {
+  client.get('search/tweets', req.body, function(err, tweets, response){
+    // console.log(tweets);
+    if (err) {
+      console.log(err);
+      return;
+    }
+    else {
+      var userObj = { users: [] };
+      for (var i = 0; i < tweets.statuses.length; i++) {
+        var userURL = 'https://twitter.com/' + tweets.statuses[i].user.screen_name;
+        var userScreenName = tweets.statuses[i].user.screen_name;
+        var userImg = tweets.statuses[i].user.profile_image_url;
+        var userImgBig = userImg.replace("normal", "400x400");
+        var userText = tweets.statuses[i].text;
+        var userTextSplit = userText.split(' ');
+        var user = {
+          url: userURL,
+          name: userScreenName,
+          imgSmall: userImg,
+          imgBig: userImgBig,
+          text: userText,
+          words: userTextSplit
+        };
+        userObj.users.push(user);
+      }
+      res.json(userObj);
+    }
+      console.log(userObj);
+  });
+});
 
 var stream = twitter.stream('statuses/filter', {track: 'basketball'});
 
