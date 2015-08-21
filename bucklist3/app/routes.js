@@ -46,6 +46,12 @@ module.exports = function(app, passport) {
         failureFlash : true // allow flash messages
     }));
 
+    app.get('/newitem', function(req, res) {
+        // render new item page
+        res.render('items/new.ejs');
+        user : req.user; // get the user out of session and pass to template
+    });
+
     // =====================================
     // PROFILE SECTION =====================
     // =====================================
