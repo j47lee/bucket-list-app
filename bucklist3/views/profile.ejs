@@ -55,8 +55,9 @@
               <input id="search-field" type="text" class="form-control" placeholder="Search for Tweets">
             </div><!-- /input-group -->
           </div><!-- /.col-lg-6 -->
+
           <div class="tweet-results row">
-            <%# TWEETS WILL POPULATE HERE%>
+            <!-- TWEETS WILL POPULATE HERE -->
           </div>
         </div>
         <!-- TWITTER END -->
@@ -77,7 +78,7 @@
   </footer>
 
 
-  <%# <script>
+  <script>
       // twitter socket
       var socket = io();
       socket.on('connect', function(){
@@ -88,7 +89,7 @@
         $('#tweet-container').prepend(html);
         // console.log(tweet);
       });
-  </script>%>
+  </script>
 
 
 </html>
