@@ -88,3 +88,14 @@ footer p{
   padding-top: 15px;
   color: #828282;
 }
+
+/******************************************************
+TWITTER FEEDS
+******************************************************/
+
+#tweet-container {
+  background-color: #F0F0F0;
+  padding: 10px;
+  max-height: 500px;
+  overflow: scroll;
+}
