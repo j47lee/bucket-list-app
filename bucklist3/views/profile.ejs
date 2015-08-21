@@ -1,14 +1,29 @@
 <!-- views/profile.ejs -->
 <!DOCTYPE html>
 <html>
-  <head>
+<head>
     <meta charset="utf-8">
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
     <link rel="stylesheet" href="stylesheets/style.css">
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
     <script src="javascript/ajax.js"></script>
     <title>BucketList</title>
-  </head>
+
+    <!-- twitter -->
+    <script type="text/javascript" src="/socket.io/socket.io.js"></script>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.js"></script>
+
+    <style>
+        #tweet-container {
+          background-color: #F0F0F0;
+          position: fixed;
+          float: left;
+        }
+
+    </style>
+</head>
+
   <body>
     <!--NAV BAR-->
     <nav class="navbar navbar-inverse">
@@ -47,12 +62,33 @@
         </div>
     </div>
 
+      <!-- twitter -->
+      <div id="tweet-container"></div>
+
   </div>
   <!-- CONTAINTER END -->
   </body>
+
   <footer>
     <p class='text-center '>
       &copy; BucketList 2015
     </p>
   </footer>
+
+
+  <script>
+
+      var socket = io();
+
+      socket.on('connect', function(){
+        console.log('Connected!');
+      });
+      socket.on('tweets', function(tweet){
+        var html = '<div class="row"><div class="col-md-6 col-md-offset-3 tweet"><img src="' + tweet.user_profile_image + '" class="avatar pull-left"/><div class="names"><span class="full-name">' + tweet.name + ' </span><span class="username">@' +tweet.screen_name + '</span></div><div class="contents"><span class="text">' + tweet.text + '</span></div></div></div>';
+        $('#tweet-container').prepend(html);
+        console.log(tweet);
+      });
+
+  </script>
+
 </html>
