@@ -12,15 +12,6 @@
     <!-- twitter -->
     <script type="text/javascript" src="/socket.io/socket.io.js"></script>
     <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.js"></script>
-
-    <style>
-        #tweet-container {
-          background-color: #F0F0F0;
-          position: fixed;
-          float: left;
-        }
-
-    </style>
 </head>
 
   <body>
@@ -43,50 +34,28 @@
   <div class="container">
 
       <div class="page-header text-center">
-          <h1><span class="fa fa-anchor"></span> Profile Page</h1>
-          <a href="/logout" class="btn btn-default btn-sm">Logout</a>
+          <h1><span class="fa fa-user"></span> <%= user.local.email %></h1>
       </div>
 
     <div class="row">
         <!-- USER INFORMATION -->
         <div class="col-sm-6">
           <div class="well">
-            <h3><span class="fa fa-user"></span> User Info</h3>
               <p>
-                  <strong>id</strong>: <%= user._id %><br>
-                  <strong>email</strong>: <%= user.local.email %><br>
-
+                <strong>email</strong><br>  User Items will go here<br>
+                <a class="btn btn-default" href="/newitem" role="button">New Item</a>
               </p>
-              <!-- START OF ITEM SUBMIT FIELD -->
-              <form action="#" method="post">
-                  <div class="form-group">
-                      <label>Bucket Item</label>
-                      <input type="text" class="form-control" name = "bucket_item" placeholder="What is your Bucket Item?">
-                  </div>
-                  <div class="form-group">
-                      <label>Entry</label>
-                     <textarea class="form-control" name= "entry" placeholder="How would you describe your item?" rows="8" cols="40"></textarea>
-                  </div>
-                  <div class="form-group">
-                      <label>Category</label>
-                      <select class="form-contorl" name="category">
-                          <option value="event">Event</option>
-                          <option value="milestone">Milestone</option>
-                          <option value="accomplishment">Accomplishment</option>
-                      </select>
-                  </div>
-                  <button id="submit-item" type="submit" class="btn btn-warning btn-lg">Add to bucket!</button>
-              </form>
-              <!-- ***END OF ITEM SUBMIT FIELD -->
           </div>
         </div>
+        <!-- twitter -->
+        <div class="col-sm-6 well" id="tweet-container"></div>
     </div>
 
+      <!-- twitter tweets -->
       <h1>TWEETS</h1>
-      <ol id="tweets"></ol>
       <a href="#" id="submit">get tweets</a>
 
-      <!-- twitter -->
+      <!-- twitter socket -->
       <div id="tweet-container"></div>
 
 
@@ -118,7 +87,6 @@
 
 
       // TWITTER API SECTION ========================================================
-        console.log('document jquery ready!');
         $('#submit').click(function(){
           var search_term = {
             q: 'basketball'
@@ -129,7 +97,7 @@
 
       function search(search_term) {
         $.ajax({
-          url: './twitter.ejs',
+          url: '/twitter.ejs',
           dataType: 'jsonp',
           success: function(data) {
             console.dir(data);

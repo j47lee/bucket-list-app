@@ -46,6 +46,19 @@ module.exports = function(app, passport) {
         failureFlash : true // allow flash messages
     }));
 
+    // add new item to the user profile
+    app.get('/newitem', function(req, res) {
+        // render new item page
+        res.render('items/new.ejs');
+        user : req.user; // get the user out of session and pass to template
+    });
+
+    // process the newitem form
+    app.post('/newitem', passport.authenticate('local-signup', {
+        successRedirect : '/profile', // redirect to the secure profile section
+        failureRedirect : '/signup', // redirect back to the signup page if there is an error
+        failureFlash : true // allow flash messages
+    }));
     // =====================================
     // PROFILE SECTION =====================
     // =====================================
