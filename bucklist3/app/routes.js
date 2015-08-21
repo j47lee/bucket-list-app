@@ -79,19 +79,6 @@ module.exports = function(app, passport) {
     });
 
 
-    // =====================================
-    // TWITTER API SECTION =====================
-    // =====================================
-    app.get('/twitter', function(req, res) {
-        res.render('twitter.ejs');
-    });
-    // app.get('/twitter', isLoggedIn, function(req, res) {
-    //     res.render('twitter.ejs', {
-    //         user : req.user // get the user out of session and pass to template
-    //     });
-    // });
-
-
 };
 
 // route middleware to make sure a user is logged in
