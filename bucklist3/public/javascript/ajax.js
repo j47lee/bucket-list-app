@@ -46,7 +46,8 @@ function searchTweets(search_term) {
       }
   });//End Ajax Post
 
-}//End Search Tweets
+
+} //end searchTweets function
 
 
 });//End Document Ready
