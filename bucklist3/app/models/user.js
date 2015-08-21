@@ -3,6 +3,23 @@
 var mongoose = require('mongoose');
 var bcrypt   = require('bcrypt-nodejs');
 
+var itemSchema = mongoose.Schema({
+
+    title             : {
+        type          : String,
+        required      : true,
+    },
+    description       : String,
+    entry             : String,
+    created_at        : {
+        type          : Date,
+        default       : Date.now,
+    },
+    updated_at        : {
+        type          : Date,
+        default       : Date.now,
+    },
+});
 // define the schema for our user model
 var userSchema = mongoose.Schema({
 
@@ -27,7 +44,8 @@ var userSchema = mongoose.Schema({
         token        : String,
         email        : String,
         name         : String
-    }
+    },
+    items            : [itemSchema] //adding in the 'ref:' code turns this embedded into a forgein key.
 
 });
 
