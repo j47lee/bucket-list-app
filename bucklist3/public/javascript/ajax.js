@@ -6,6 +6,9 @@ var searchButton = $('#search-button');
 // AJAX TWEETS
 // ==========================================================
 
+
+// ON Search Button
+// ===================================
 searchButton.on('click',function () {
   var searchTerm = searchField.val();
   var search_term = {
@@ -15,6 +18,8 @@ searchButton.on('click',function () {
   searchTweets(search_term);
 });
 
+//Search Tweets
+// ===================================
 function searchTweets(search_term) {
   console.dir(search_term);
 
@@ -25,10 +30,13 @@ function searchTweets(search_term) {
       contentType: 'application/json; charset=UTF-8',
       dataType   : 'json',
       success: function(data) {
-        for (var i = 0; i < 5; i++) {
+        for (var i = 0; i < data.users.length; i++) {
           console.dir(data.users[i]);
-          $('.tweet-results').append(
-            "<div class='tweets'>" +   '<a href="' + data.users[i].url + '">' + '<img src="' + data.users[i].imgSmall +'" />'  + "<p>" + data.users[i].name + "</p>" + "</div>"
+          $('.tweet-results').prepend(
+            "<div class='tweets'>" +   '<a href="' +
+            data.users[i].url + '">' + '<img src="' +
+            data.users[i].imgSmall +'" />'  + "<p>" +
+            data.users[i].name + "</p>" + "</div>"
           )
         }
       },
@@ -36,9 +44,9 @@ function searchTweets(search_term) {
         console.log(error);
         console.log(data);
       }
+  });//End Ajax Post
 
-  });
+}//End Search Tweets
 
-}
 
 });//End Document Ready
