@@ -12,9 +12,6 @@
 
     <!-- twitter -->
     <script type="text/javascript" src="/socket.io/socket.io.js"></script>
-    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.js"></script>
-</head>
-
   <body>
     <!--NAV BAR-->
     <nav class="navbar navbar-inverse">
@@ -65,8 +62,18 @@
         <!-- TWITTER END -->
 
     </div>
+
+      <!-- twitter tweets -->
+      <h1>TWEETS</h1>
+      <button type="button" name="button">GET TWEETS</button>
+
+      <!-- twitter socket -->
+      <div id="tweet-container"></div>
+
+
+
   </div>
-  <!-- CONTAINTER END -->
+  <!-- CONTAINER END -->
   </body>
 
   <footer>
@@ -76,10 +83,9 @@
   </footer>
 
 
-  <%# <script>
-
+  <script>
+      // twitter socket
       var socket = io();
-
       socket.on('connect', function(){
         console.log('Connected!');
       });
@@ -88,7 +94,7 @@
         $('#tweet-container').prepend(html);
         // console.log(tweet);
       });
+  </script>
 
-  </script>%>
 
 </html>

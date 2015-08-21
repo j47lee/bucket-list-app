@@ -16,7 +16,7 @@ searchButton.on('click',function () {
     q: searchTerm
   };
 
-  searchTweets(search_term)
+  searchTweets(search_term);
 });
 
 function searchTweets(search_term) {
@@ -30,7 +30,7 @@ function searchTweets(search_term) {
         console.dir(data);
         for(item in data['results']){
           $('#tweets').append("<div>" + data['results'][item]['text'] + "</div>")
-        };
+        }
       },
       error: function(error,data){
         console.log(error);
@@ -39,7 +39,7 @@ function searchTweets(search_term) {
 
   });
 
-};
+}
 
 
 
@@ -95,7 +95,7 @@ signUpForm.on('submit',function (evt) {
       console.log(data);
     }
   });//END POST REQUEST
-})//END SIGN UP REQUEST
+});//END SIGN UP REQUEST
 
 
 
